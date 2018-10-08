@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>C11新特性 - auto · Antknt47&#39;s blog</title>
+    <title>利用Promise为接口封装超时功能 · Antknt47&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Antknt47&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">C11新特性 - auto</a>
+                <a href="#" class="post-name">利用Promise为接口封装超时功能</a>
             </div>
     </div>
     
@@ -240,7 +240,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            C11新特性 - auto
+            利用Promise为接口封装超时功能
             <!-- 404 -->
             
         </h1>
@@ -259,26 +259,26 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C++">C++</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Node.js">Node.js</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C11">C11</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "异步IO">异步IO</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "auto">auto</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "超时机制">超时机制</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "g++">g++</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Promise">Promise</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "gnu">gnu</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "async/await">async/await</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">503</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">441</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/08/28</span>
+                    <span class="post-intro-time">2018/10/08</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -402,22 +402,16 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>升级语言标准一个是为了更方便的写代码，另一个是为了适应新流行编程的技术。<a id="more"></a> 最近看github的时候遇到新标准的代码也不少，非常有必要学一下。</p>
-<h2 id="auto-关键字"><a href="#auto-关键字" class="headerlink" title="auto 关键字"></a>auto 关键字</h2><p>auto这个关键字在之前的C标准中，表示一个自动变量。除非使用register关键字使她变成寄存器变量否则就默认隐含表示这个变量为自动变量。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>; <span class="comment">// 自动变量</span></span><br><span class="line"><span class="keyword">auto</span> <span class="keyword">int</span> b = <span class="number">2</span>; <span class="comment">// 自动变量</span></span><br><span class="line"><span class="keyword">register</span> <span class="keyword">int</span> r = <span class="number">3</span>; <span class="comment">// 寄存器变量</span></span><br></pre></td></tr></table></figure></p>
-<p>auto的这个功能非常多余，这个关键字几乎没有人使用，所以在C++11中就废除了，承担起了变量类型推导的功能。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> str = <span class="string">"hello world"</span>;   <span class="comment">// const char *</span></span><br><span class="line"><span class="keyword">auto</span> pi = <span class="number">3.1415926</span>;        <span class="comment">// double</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="在G-中使用"><a href="#在G-中使用" class="headerlink" title="在G++中使用"></a>在G++中使用</h2><p>g++编译器是gcc的一部分，由gnu组织负责管理发布，可以查阅gnu网站当前版本的g++是否支持所需的新特性</p>
-<ul>
-<li><a href="https://gcc.gnu.org/projects/cxx-status.html" target="_blank" rel="noopener">https://gcc.gnu.org/projects/cxx-status.html</a></li>
-<li>本篇中使用的特性为<strong>auto-typed variables</strong>，标准为<strong>N1984</strong>，支持该功能的GCC版本号为<strong>GCC≥4.4</strong></li>
-</ul>
-<p>首先我们确认下g++的版本号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ g++ -v</span><br><span class="line">...</span><br><span class="line">gcc version 4.8.5 20150623 (Red Hat 4.8.5-16) (GCC)</span><br></pre></td></tr></table></figure></p>
-<p>我这里是4.8.5的，所以已经支持C++11了。那么紧接着测试一下。</p>
-<p>编码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> str = <span class="number">3.14</span>;   <span class="comment">// double</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(str) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>编译时注意需要输入 <strong>--std=c++11</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ g++ main.cpp --std=c++11</span><br><span class="line">$ ./a.out </span><br><span class="line">8</span><br></pre></td></tr></table></figure></p>
-<p>从使用sizeof操作符可以正常编译并输出正确的结果来猜测，auto操作符是编译时功能。</p>
-<h2 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a>实战应用</h2><p>这个功能使得一些操作例如，如遍历STL的vectors时更简洁。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v();</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> iter = v.begin(); iter != v.end(); ++v)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; iter &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>⚠️ auto在使用是要注意避免对语法可读性和代码安全产生影响。</strong></p>
-
+        <p>Node.js的原生接口以及一些旧包中的接口不少没有超时回调。以下提供一种利用Promise的思路来进行简洁的封装。<a id="more"></a></p>
+<p>举例为Node.js v8.12.0环境下，<strong>dns.resolve4</strong> 接口添加超时回调。</p>
+<p>1.创建第一个Promise，在其中调用异步方法dns.resolve4，并在异步回调中调用resolve触发Promise完成，这里利用resolve的参数返回dns结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dnsRequstPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    resolver.resolve4(url, (err, addresses) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            resolve(addresses);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>2.创建第二个Promise进行超时处理：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dnsTimeOutPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 超时等待时间</span></span><br><span class="line">    <span class="keyword">let</span> timeout = <span class="number">5000</span>;</span><br><span class="line">    <span class="comment">// 如果想超时返回正常结果而不进行异常处理这里可以把reject改成resolve</span></span><br><span class="line">    setTimeout(reject, timeout);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>3.利用Promise.race进行异步竞争，后触发的回调会被忽略（这里处理过程并没有被打断，会浪费一些资源，如果有办法打断可以在超时回调中进行）：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dnsPromiseWithTimeOut = <span class="built_in">Promise</span>.race([dnsRequstPromise, dnsTimeOutPromise]);</span><br></pre></td></tr></table></figure></p>
+<p>完整封装一个带超时的dns请求接口如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Resolver &#125; = <span class="built_in">require</span>(<span class="string">'dns'</span>);</span><br><span class="line"><span class="keyword">const</span> resolver = <span class="keyword">new</span> Resolver();</span><br><span class="line">resolver.setServers([<span class="string">'8.8.8.8'</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dnsWithTimeout = <span class="function">(<span class="params">url, timeout = <span class="number">5000</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> dnsRequstPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        resolver.resolve4(url, (err, addresses) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span>(err) &#123;</span><br><span class="line">                resolve(err);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(addresses);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> dnsTimeOutPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        setTimeout(reject, timeout, <span class="string">'timeout'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.race([dnsRequstPromise, dnsTimeOutPromise]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>调用该接口:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dnsWithTimeout(<span class="string">'google.com'</span>, <span class="number">1000</span>).then( <span class="function">(<span class="params">addresses</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'DNS resolved:'</span>, addresses);</span><br><span class="line">&#125;).catch( <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'DNS error:'</span>, err); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>由于封装的该方法返回一个promise，所以我们还可以用await机制进行调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">urlTest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> addresses = <span class="keyword">await</span> dnsTimeOutPromise(<span class="string">'google.com'</span>, <span class="number">1000</span>);</span><br><span class="line">        <span class="built_in">console</span>(<span class="string">'DNS successed:'</span>, addresses);</span><br><span class="line">    &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.error(<span class="string">'DNS failed:'</span>, err);   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </article>
     <!-- license  -->
     
@@ -425,13 +419,13 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/10/08/promise-timeout/" title= "利用Promise为接口封装超时功能">
-                    <div class="nextTitle">利用Promise为接口封装超时功能</div>
-                </a>
-            
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/08/28/cpp-auto/" title= "C11新特性 - auto">
+                    <div class="prevTitle">C11新特性 - auto</div>
+                </a>
             
         </li>
     </ul>
@@ -528,7 +522,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#auto-关键字"><span class="toc-number">1.</span> <span class="toc-text">auto 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在G-中使用"><span class="toc-number">2.</span> <span class="toc-text">在G++中使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实战应用"><span class="toc-number">3.</span> <span class="toc-text">实战应用</span></a></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
